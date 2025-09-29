@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises,asnyc,await</title>
+</head>
+<body>
+    <script>
+        //PROMISES: a promise in javascript is an object that represents the eventual completion of an asynchronous operation and its resulting value. 
+        // 3 possible states:
+        // pending->initial state,operation not completed yet.
+        // fulfilled(resolved)->Operation completed successfully
+        // rejected->operation failed.
+
+        let TicketBooking=new Promise((resolve,reject)=>{
+            let booking=true;
+            if(booking)
+                resolve()
+            else
+                reject()
+        })
+        .then(success)
+        .catch(failure)
+        function success(){
+            console.log("your ticket is confirmed")
+        }
+        function failure(){
+            console.log("no seats available")
+        }
+
+        //floor-converts decimal into whole number
+        let tossCoin=new Promise((resolve,reject)=>{
+        let rand=Math.floor(Math.random()*2);
+        if(rand==0)
+            resolve(rand)
+        else
+            reject(rand)
+
+    })
+    .then((rand)=>console.log(`you won ${rand}`))
+    .catch((rand)=>console.log(`you lose ${rand}`))
+
+    async function Send(){
+     return "MSG Sended"
+    }
+    console.log(Send());
+    
+
+    function placeOrder(){
+     return new Promise((resolve,reject)=>{
+        console.log("try to placing your order")
+        setTimeout(()=>{
+            resolve("your order placed")
+        },2000);
+     })
+    }
+    async function trackDelivery(){
+        let steps=[
+            "preparing your order",
+            "prepared and picked up by delivery partner",
+            "on the way to deliver your order",
+            "order delivered"
+        ]
+        for(let steps of steps){
+            await new Promise((res)=>setTimeout(res,2000))
+            console.log(step)
+        }
+    }
+    async function orderStatus(){
+        const Status=await placeOrder()
+        console.log(Status);
+        trackDelivery();
+
+    }
+    orderStatus()
+</script>
+
+</body>
+</html>

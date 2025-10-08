@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <h1>User Information Dashboard</h1>
+    <button onclick="loadUser()">Load User</button>
+    <ul id="result"></ul>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+function loadUser(){
+    
+    const result = document.getElementById("result")
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response)=>{
+        if(!response){
+            throw new Error("Internet issue")
+        }
+       return response.json()
+    })
+    .then((data)=>{
+        data.map((value)=>{
+        result.innerHTML+=`<li><b>${value.username}</b> - ${value.email} - ${value.address.city}</li>`
+        console.log(value.username,value.email,value.address.city)
+
+
+        })
+    }).catch((error)=>{
+        throw new Error("No data found",error)
+    })
